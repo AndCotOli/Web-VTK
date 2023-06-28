@@ -56,14 +56,15 @@ state.source_file = None
 stlReader = vtkSTLReader()
 
 def update_mapper():
-    with open("temp.stl", 'w') as file:
-        for part in state.source_file['content']:
-            file.write(part.decode('ascii'))
-    stlReader.SetFileName("temp.stl")
-    mapper.SetInputConnection(stlReader.GetOutputPort())
-    ctrl.view_update()
-    ctrl.view_reset_camera()
-    os.remove("temp.stl")
+    if state.source_file['type'] == "model/stl":
+        with open("temp.stl", 'w') as file:
+            for part in state.source_file['content']:
+                file.write(part.decode('ascii'))
+        stlReader.SetFileName("temp.stl")
+        mapper.SetInputConnection(stlReader.GetOutputPort())
+        ctrl.view_update()
+        ctrl.view_reset_camera()
+        os.remove("temp.stl")
 
 with SinglePageLayout(server) as layout:
     with layout.content:
