@@ -68,7 +68,7 @@ def update_mapper():
         ctrl.view_reset_camera()
         os.remove("temp.stl")
 
-def show_normals():
+def show_mesh():
     prop = actor.GetProperty()
     if not state.show_mesh: # Flip is backwards (False = Show mesh - True = Don't show mesh)
         prop.SetRepresentationToWireframe()
@@ -85,7 +85,7 @@ with SinglePageWithDrawerLayout(server) as layout:
                 vuetify.VSubheader("Upload stl")
         vuetify.VDivider()
         with vuetify.VContainer(fluid=True):
-            vuetify.VCheckbox(label="Show mesh", v_model=("show_mesh", False), change=show_normals)
+            vuetify.VCheckbox(label="Show mesh", v_model=("show_mesh", False), change=show_mesh)
             vuetify.VCheckbox(label="Show normals", v_model=("show_normals", False), change=lambda: print(f"Show mesh normals to: {state.show_normals}"))
 
     with layout.toolbar:
