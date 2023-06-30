@@ -20,9 +20,11 @@ state.show_normals = False
 
 model = {
     "actor": simple.Cone(),
-    "display": None
+    "display": None,
+    "normals": None
 }
 model["display"] = simple.Show(model["actor"])
+model["normals"] = simple.NormalGlyphs(registrationName='NormalGlyphs1', Input=model["actor"])
 view = simple.Render()
 
 def update_mapper():
@@ -34,7 +36,9 @@ def update_mapper():
         simple.Delete(model["actor"])
         model["actor"] = simple.STLReader(registrationName="model.stl", FileNames=[path])
         model["display"] = simple.Show(model["actor"])
+        model["normals"] = simple.NormalGlyphs(registrationName='NormalGlyphs1', Input=model["actor"])
         ctrl.view_update()
+        ctrl.view_reset_camera()
         ctrl.view_reset_camera()
         os.remove(path)
 
@@ -43,7 +47,14 @@ def show_mesh():
     ctrl.view_update()
 
 def show_normals():
-    pass
+    if state.show_normals:
+        simple.Delete(model["normals"])
+    else:
+        simple.Show(model["normals"])
+
+    ctrl.view_update()
+
+
 
 ctrl.update_mapper = update_mapper
 ctrl.show_mesh = show_mesh
