@@ -12,8 +12,11 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install dependencies
-pip install -r requirements.txt
+pip install trame
 
-# Run the app
-python src/main.py
+# Deactivate the venv
+deactivate
+
+# Run the app with Paraview python
+~/../../opt/paraview/bin/pvpython src/main.py --venv .venv --server
 ```
