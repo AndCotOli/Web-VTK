@@ -1,106 +1,80 @@
-import os
+import paraview.web.venv
 
+import os
+from pathlib import Path
+
+from paraview import simple
 from trame.app import get_server
 from trame.ui.vuetify import SinglePageWithDrawerLayout
-from trame.widgets import vtk, vuetify
-
-from vtkmodules.vtkFiltersSources import vtkConeSource
-from vtkmodules.vtkIOGeometry import vtkSTLReader
-from vtkmodules.vtkRenderingCore import (
-    vtkActor,
-    vtkPolyDataMapper,
-    vtkRenderer,
-    vtkRenderWindow,
-    vtkRenderWindowInteractor,
-)
-
-# Required for interactor initialization
-from vtkmodules.vtkInteractionStyle import vtkInteractorStyleSwitch  # noqa
-
-# Required for rendering initialization, not necessary for
-# local rendering, but doesn't hurt to include it
-import vtkmodules.vtkRenderingOpenGL2  # noqa
-
-
-# -----------------------------------------------------------------------------
-# VTK pipeline
-# -----------------------------------------------------------------------------
-
-renderer = vtkRenderer()
-renderWindow = vtkRenderWindow()
-renderWindow.AddRenderer(renderer)
-
-renderWindowInteractor = vtkRenderWindowInteractor()
-renderWindowInteractor.SetRenderWindow(renderWindow)
-renderWindowInteractor.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
-
-cone_source = vtkConeSource()
-mapper = vtkPolyDataMapper()
-mapper.SetInputConnection(cone_source.GetOutputPort())
-actor = vtkActor()
-actor.SetMapper(mapper)
-
-renderer.AddActor(actor)
-renderer.ResetCamera()
-
-# -----------------------------------------------------------------------------
-# Trame
-# -----------------------------------------------------------------------------
+from trame.widgets import vtk, vuetify, paraview
 
 server = get_server()
 state = server.state
 ctrl = server.controller
 
+paraview.initialize(server)
+
 state.source_file = None
 state.show_mesh = False
 state.show_normals = False
 
-stlReader = vtkSTLReader()
+model = {
+    "actor": simple.Cone(),
+    "display": None
+}
+model["display"] = simple.Show(model["actor"])
+view = simple.Render()
 
 def update_mapper():
     if state.source_file['type'] == "model/stl":
-        with open("temp.stl", 'w') as file:
+        path = str(Path().absolute().joinpath('temp.temp.stl'))
+        with open(path, 'w') as file:
             for part in state.source_file['content']:
                 file.write(part.decode('ascii'))
-        stlReader.SetFileName("temp.stl")
-        mapper.SetInputConnection(stlReader.GetOutputPort())
+        simple.Delete(model["actor"])
+        model["actor"] = simple.STLReader(registrationName="model.stl", FileNames=[path])
+        model["display"] = simple.Show(model["actor"])
         ctrl.view_update()
         ctrl.view_reset_camera()
-        os.remove("temp.stl")
+        os.remove(path)
 
 def show_mesh():
-    prop = actor.GetProperty()
-    if not state.show_mesh: # Flip is backwards (False = Show mesh - True = Don't show mesh)
-        prop.SetRepresentationToWireframe()
-    else:
-        prop.SetRepresentationToSurface()
+    model["display"].SetRepresentationType("Surface" if state.show_mesh else "Wireframe")
     ctrl.view_update()
+
+def show_normals():
+    pass
+
+ctrl.update_mapper = update_mapper
+ctrl.show_mesh = show_mesh
+ctrl.show_normals = show_normals
 
 with SinglePageWithDrawerLayout(server) as layout:
     with layout.drawer as drawer:
         drawer.width = 325
         with vuetify.VContainer(fluid=True):
             vuetify.VFileInput(v_model="source_file")
-            with vuetify.VBtn(click=update_mapper):
+            with vuetify.VBtn(click=ctrl.update_mapper):
                 vuetify.VSubheader("Upload stl")
         vuetify.VDivider()
         with vuetify.VContainer(fluid=True):
-            vuetify.VCheckbox(label="Show mesh", v_model=("show_mesh", False), change=show_mesh)
-            vuetify.VCheckbox(label="Show normals", v_model=("show_normals", False), change=lambda: print(f"Show mesh normals to: {state.show_normals}"))
+            vuetify.VCheckbox(label="Show mesh", v_model=("show_mesh", False), change=ctrl.show_mesh)
+            vuetify.VCheckbox(label="Show normals", v_model=("show_normals", False), change=ctrl.show_normals)
 
     with layout.toolbar:
         vuetify.VSpacer()
         vuetify.VDivider(vertical=True, classes="mx-2")
-        vuetify.VBtn()
+        with vuetify.VBtn(click=ctrl.view_reset_camera):
+            vuetify.VSubheader("Reset Camera")
 
     with layout.content:
         with vuetify.VContainer(
             fluid=True,
             classes="pa-0 fill-height",
         ):
-            view = vtk.VtkLocalView(renderWindow)
-            ctrl.view_update = view.update
-            ctrl.view_reset_camera = view.reset_camera
+            html_view = paraview.VtkLocalView(view)
+            ctrl.view_update = html_view.update
+            ctrl.view_reset_camera = html_view.reset_camera
 
 
 # -----------------------------------------------------------------------------
