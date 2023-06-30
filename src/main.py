@@ -7,6 +7,7 @@ from paraview import simple
 from trame.app import get_server
 from trame.ui.vuetify import SinglePageWithDrawerLayout
 from trame.widgets import vtk, vuetify, paraview
+from scripts.vtk2www_inlet_outlets import default_inlet_outlets
 
 server = get_server()
 state = server.state
@@ -17,6 +18,7 @@ paraview.initialize(server)
 state.source_file = None
 state.show_mesh = False
 state.show_normals = False
+state.show_outlets = False
 
 model = {
     "actor": simple.Cone(),
@@ -24,7 +26,7 @@ model = {
     "normals": None
 }
 model["display"] = simple.Show(model["actor"])
-model["normals"] = simple.NormalGlyphs(registrationName='NormalGlyphs1', Input=model["actor"])
+model["normals"] = simple.NormalGlyphs(registrationName='NormalGlyphs', Input=model["actor"])
 view = simple.Render()
 
 def update_mapper():
@@ -54,11 +56,14 @@ def show_normals():
 
     ctrl.view_update()
 
-
+def show_outlets():
+    pass
+    # inlet, outlets, outlets_wall_distance = default_inlet_outlets(model["actor"])
 
 ctrl.update_mapper = update_mapper
 ctrl.show_mesh = show_mesh
 ctrl.show_normals = show_normals
+ctrl.show_outlets = show_outlets
 
 with SinglePageWithDrawerLayout(server) as layout:
     with layout.drawer as drawer:
@@ -71,6 +76,9 @@ with SinglePageWithDrawerLayout(server) as layout:
         with vuetify.VContainer(fluid=True):
             vuetify.VCheckbox(label="Show mesh", v_model=("show_mesh", False), change=ctrl.show_mesh)
             vuetify.VCheckbox(label="Show normals", v_model=("show_normals", False), change=ctrl.show_normals)
+        vuetify.VDivider()
+        with vuetify.VContainer(fluid=True):
+            vuetify.VCheckbox(label="Show outlets", v_model=("show_outlets", False), change=ctrl.show_outlets)
 
     with layout.toolbar:
         vuetify.VSpacer()
