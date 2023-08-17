@@ -1,14 +1,12 @@
 import tempfile
 
+import numpy as np
+import pyvista as pv
+from pyvista.trame.ui import get_or_create_viewer
 from trame.app import get_server
 from trame.app.file_upload import ClientFile
 from trame.ui.vuetify import SinglePageWithDrawerLayout
-from trame.widgets import vuetify, html
-
-import pyvista as pv
-from pyvista.trame.ui import get_or_create_viewer
-
-import numpy as np
+from trame.widgets import vuetify
 
 from scripts.vtk2www_inlet_outlets import default_inlet_outlets
 
@@ -279,4 +277,5 @@ with SinglePageWithDrawerLayout(server) as layout:
 
     layout.footer.hide()
 
-server.start()
+if __name__ == "__main__":
+    server.start()
