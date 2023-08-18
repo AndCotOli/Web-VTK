@@ -1,6 +1,7 @@
 """Main file."""
 from trame.app import get_server
 from ui.main import initialize as initialize_ui
+from state.main import initialize as initialize_state
 
 
 def main(server=None):
@@ -11,6 +12,7 @@ def main(server=None):
     server.client_type = "vue2"
 
     initialize_ui(server)
+    initialize_state(server)
 
     return server.start()
 
