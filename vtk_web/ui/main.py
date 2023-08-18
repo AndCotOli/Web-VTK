@@ -5,6 +5,7 @@ from trame.assets.local import LocalFileManager
 
 from .toolbar import initialize as initialize_toolbar
 from .drawer import initialize as initilize_drawer
+from .viewer import initialize as initialize_viewer
 
 
 def initialize(server):
@@ -27,9 +28,11 @@ def get_favicon():
 
 def set_up_layout(server):
     """Set up initial layout."""
+    ctrl = server.controller
     with SinglePageWithDrawerLayout(server) as layout:
         layout.title.set_text("Commlab VTK")
+        initialize_viewer(layout, ctrl)
         initialize_toolbar(layout)
-        initilize_drawer(layout, server.controller)
+        initilize_drawer(layout, ctrl)
 
         layout.footer.hide()

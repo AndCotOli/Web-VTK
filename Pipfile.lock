@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "93891fae13d072b013995e67233a27fa535f4495e67ad13db1ba30386298cf12"
+            "sha256": "3a265b4374b924a7861ec79d57c80842735edbdb1002a4642e4a97e37590c371"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -758,11 +758,11 @@
         },
         "trame": {
             "hashes": [
-                "sha256:328bf15ad43e07ec747c151d30b230d69e4a32f67a04f346767ae957e8a5047b",
-                "sha256:33166259b260222faa738911c48a39cd937c5e964072be6032c0ada3279460b0"
+                "sha256:7d4f402b4a3c50fefa2889295dbfb87b7e869c3f7ea9045e413fbedeef0f4fa9",
+                "sha256:85b24e4a83cc9cb61854f55db2d5ace8b58468b31f696fa19e576487f62e4152"
             ],
             "index": "pypi",
-            "version": "==3.2.2"
+            "version": "==3.2.4"
         },
         "trame-client": {
             "hashes": [
@@ -777,6 +777,14 @@
                 "sha256:6cca8f1f786bc7b121925524be85ce1ee9440a9911eaa16564e9af764dca6cd3"
             ],
             "version": "==2.11.7"
+        },
+        "trame-vtk": {
+            "hashes": [
+                "sha256:1462f8230efb56a65781baf4163439562a62f1a29b669f852cdc9f7c15496694",
+                "sha256:341cf7b45c539ca683332ffc179d6c7874c7f626a12b78dc7e588953d425d05c"
+            ],
+            "index": "pypi",
+            "version": "==2.5.8"
         },
         "trame-vuetify": {
             "hashes": [
