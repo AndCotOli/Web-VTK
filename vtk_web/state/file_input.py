@@ -1,12 +1,11 @@
 """File input state."""
 from tempfile import NamedTemporaryFile
 
-import pyvista as pv
 import numpy as np
+import pyvista as pv
 from plotter import plotter
-from trame.app.file_upload import ClientFile
-
 from scripts.vtk2www_inlet_outlets import default_inlet_outlets
+from trame.app.file_upload import ClientFile
 
 
 def initialize(server):
@@ -27,13 +26,18 @@ def initialize(server):
         with NamedTemporaryFile(suffix=file.name) as path:
             with open(path.name, "wb") as f:
                 f.write(bytes)
-            ds = pv.read(path.name)
+            mesh = pv.read(path.name)
 
-            if not is_valid_mesh(ds):
+            if not is_valid_mesh(mesh):
                 print("Invalid mesh")
                 return
 
-            plotter.add_mesh(ds, name="mesh", reset_camera=True)
+            mesh.compute_normals(inplace=True)
+            arrows = mesh.glyph(orient="Normals", tolerance=0.05, scale=False)
+            plotter.add_mesh(arrows, name="normals", show_scalar_bar=False)
+            plotter.actors["normals"].SetVisibility(state.normals_visibility)
+
+            plotter.add_mesh(mesh, name="mesh", reset_camera=True)
 
         ctrl.view_update()
 
