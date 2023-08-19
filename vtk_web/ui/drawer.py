@@ -2,8 +2,9 @@
 from trame.widgets import vuetify
 
 
-def initialize(layout, ctrl):
+def initialize(layout, server):
     """Set up drawer layout."""
+    ctrl = server.controller
     with layout.drawer:
         camera_controls(ctrl)
         vuetify.VSpacer()

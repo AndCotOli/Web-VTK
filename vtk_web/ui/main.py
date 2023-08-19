@@ -28,11 +28,10 @@ def get_favicon():
 
 def set_up_layout(server):
     """Set up initial layout."""
-    ctrl = server.controller
     with SinglePageWithDrawerLayout(server) as layout:
         layout.title.set_text("Commlab VTK")
-        initialize_viewer(layout, ctrl)
-        initialize_toolbar(layout)
-        initilize_drawer(layout, ctrl)
+        initialize_viewer(layout, server)
+        initialize_toolbar(layout, server)
+        initilize_drawer(layout, server)
 
         layout.footer.hide()

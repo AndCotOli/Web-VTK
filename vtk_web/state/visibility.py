@@ -9,7 +9,7 @@ def initialize(server):
     @state.change("mesh_visibility")
     def mesh_visibility_change(mesh_visibility, **kwargs):
         """Toggle visibility the of mesh edges."""
-        mesh_actor = plotter.actors["mesh"]
+        mesh_actor = plotter.actors["mesh"] if "mesh" in plotter.actors.keys() else None
         if mesh_actor:
             mesh_actor.prop.show_edges = mesh_visibility
             ctrl.view_update()

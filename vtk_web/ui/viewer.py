@@ -6,8 +6,9 @@ from trame.widgets import vuetify
 from plotter import plotter
 
 
-def initialize(layout, ctrl):
+def initialize(layout, server):
     """Initialize VTK view."""
+    ctrl = server.controller
     viewer = get_or_create_viewer(plotter)
     with layout.content:
         with vuetify.VContainer(
