@@ -14,32 +14,34 @@ def initialize(server):
 
     @state.change("file_exchange")
     def file_exchange(file_exchange, **kwargs):
-        plotter.clear_actors()
+        mesh, error = get_mesh_from_file_exchange(file_exchange)
 
-        file = ClientFile(file_exchange)
-
-        if not is_valid_file(file):
-            print("Invalid file")
+        if error:
+            # TODO: Better error handling
+            print(error)
             return
 
-        bytes = file.content
-        with NamedTemporaryFile(suffix=file.name) as path:
-            with open(path.name, "wb") as f:
-                f.write(bytes)
-            mesh = pv.read(path.name)
+        plotter.clear_actors()
 
-            if not is_valid_mesh(mesh):
-                print("Invalid mesh")
-                return
 
-            mesh.compute_normals(inplace=True)
-            arrows = mesh.glyph(orient="Normals", tolerance=0.05, scale=False)
-            plotter.add_mesh(arrows, name="normals", show_scalar_bar=False)
-            plotter.actors["normals"].SetVisibility(state.normals_visibility)
+        add_mesh_to_view(mesh, state)
+        ctrl.view_update_camera()
 
-            plotter.add_mesh(mesh, name="mesh", reset_camera=True)
 
-        ctrl.view_update()
+def get_mesh_from_file_exchange(file_exchange):
+    """Get mesh from a file_exchange."""
+    file = ClientFile(file_exchange)
+
+    if not is_valid_file(file):
+        return None, "invalid file"
+
+    bytes = file.content
+    with NamedTemporaryFile(suffix=file.name) as path:
+        with open(path.name, "wb") as mesh_file:
+            mesh_file.write(bytes)
+        mesh = pv.read(path.name)
+
+    return mesh, None
 
 
 def is_valid_file(file):
@@ -58,4 +60,14 @@ def is_valid_mesh(mesh):
     connected_cells = outlets_border.connectivity()
     num_outlets = len(np.unique(connected_cells["RegionId"]))
 
-    return True  # num_outlets == 2
+    return num_outlets == 2
+
+
+def add_mesh_to_view(mesh, state):
+    """Add mesh to the viewer."""
+    mesh.compute_normals(inplace=True)
+    arrows = mesh.glyph(orient="Normals", tolerance=0.05, scale=False)
+    plotter.add_mesh(arrows, name="normals", show_scalar_bar=False)
+    plotter.actors["normals"].SetVisibility(state.normals_visibility)
+
+    plotter.add_mesh(mesh, name="mesh")
