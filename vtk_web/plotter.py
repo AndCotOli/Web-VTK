@@ -5,5 +5,5 @@ pv.OFF_SCREEN = True
 
 plotter = pv.Plotter()
 
-airplane = pv.read("airplane.vtk")
+airplane = pv.read("models/airplane.vtk")
 plotter.add_mesh(airplane, name="mesh")
