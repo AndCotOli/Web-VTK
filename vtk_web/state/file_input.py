@@ -12,6 +12,8 @@ def initialize(server):
     """Initialize file input state."""
     state, ctrl = server.state, server.controller
 
+    state.setdefault("is_valid_mesh", False)
+
     @state.change("file_exchange")
     def file_exchange(file_exchange, **kwargs):
         mesh, error = get_mesh_from_file_exchange(file_exchange)
@@ -23,6 +25,7 @@ def initialize(server):
 
         plotter.clear_actors()
 
+        state.is_valid_mesh = is_valid_mesh(mesh)
 
         add_mesh_to_view(mesh, state)
         ctrl.view_update_camera()
