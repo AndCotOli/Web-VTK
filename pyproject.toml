@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "vtk-web"
+version = "0.1.0"
+description = ""
+authors = ["Andreu Cotanda Oliver <cotoli23@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyvista = "^0.41.1"
+trame = "^3.2.4"
+trame-vtk = "^2.5.8"
+trame-vuetify = "^2.3.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
