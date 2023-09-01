@@ -28,7 +28,7 @@ def initialize(server):
         state.is_valid_mesh = is_valid_mesh(mesh)
 
         add_mesh_to_view(mesh, state)
-        ctrl.view_update_camera()
+        ctrl.view_reset_camera()
 
 
 def get_mesh_from_file_exchange(file_exchange):

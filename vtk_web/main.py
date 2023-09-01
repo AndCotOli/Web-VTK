@@ -9,8 +9,6 @@ def main(server=None):
     if server is None:
         server = get_server()
 
-    server.client_type = "vue2"
-
     initialize_ui(server)
     initialize_state(server)
 

@@ -19,5 +19,5 @@ def file_input(state):
         dense=True,
         hide_details="auto",
         label="STL Model",
-        loading=False
+        loading=state.trame__busy,
     )
