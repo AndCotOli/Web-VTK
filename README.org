@@ -10,9 +10,9 @@ python -m venv .venv && source .venv/bin/activate
 #+end_src
 - Install the required dependencies:
 #+begin_src sh
-pip install -r requirements.txt
+pip install -e .
 #+end_src
 - Run the app:
 #+begin_src sh
-python vtk_web/main.py # use --server and/or --hot_reload
+vtk-web # user --server or --hot_reload
 #+end_src

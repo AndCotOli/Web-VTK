@@ -1,7 +1,6 @@
 """VTK viewer ui."""
-from pyvista.trame.ui import get_or_create_viewer
+from pyvista.trame.ui import get_viewer
 from trame.widgets import vuetify
-
 
 from vtk_web.plotter import plotter
 
@@ -9,7 +8,7 @@ from vtk_web.plotter import plotter
 def initialize(layout, server):
     """Initialize VTK view."""
     ctrl = server.controller
-    viewer = get_or_create_viewer(plotter)
+    viewer = get_viewer(plotter)
     with layout.content:
         with vuetify.VContainer(
                 fluid=True,
