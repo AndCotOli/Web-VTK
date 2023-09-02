@@ -28,7 +28,7 @@ def initialize(server):
         state.is_valid_mesh = is_valid_mesh(mesh)
 
         add_mesh_to_view(mesh, state)
-        ctrl.view_reset_camera()
+        ctrl.view_push_camera()
 
 
 def get_mesh_from_file_exchange(file_exchange):
@@ -74,3 +74,4 @@ def add_mesh_to_view(mesh, state):
     plotter.actors["normals"].SetVisibility(state.normals_visibility)
 
     plotter.add_mesh(mesh, name="mesh")
+    plotter.camera_position = 'xy'

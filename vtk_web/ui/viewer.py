@@ -22,6 +22,8 @@ def initialize(layout, server):
                 default_server_rendering=False
             )
 
-            ctrl.view_get_rendering_state = lambda *args, **kwargs: viewer.SERVER_RENDERING
+            ctrl.view_get_rendering_state = lambda *args, **kwargs: (
+                viewer.SERVER_RENDERING)
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
+            ctrl.view_push_camera = view.push_camera
