@@ -14,11 +14,13 @@ on:
 
 jobs:
   export-requirements-txt:
-    runs-on: ubuntu-latest
+    using: 'composite'
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
+      with:
+        python-version: '^3.11'
     - name: Install poetry
       run: pip install poetry poetry-plugin-export
     - name: Update requirements.txt
-      run: poetry export -f requirements.txt --without-hashes -o requirements.txt
+      run: poetry export -f requirements.txt --without-hashes -o requirements.txt -vvv
