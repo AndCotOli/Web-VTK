@@ -1,4 +1,5 @@
 name: poetry export requirements.txt
+run-name: Updating packages in requirements.txt
 on:
   workflow_dispatch:
   pull_request:
@@ -14,4 +15,6 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
     - run: python -m pip install poetry poetry-plugin-export
-    - run: poetry export -f requirements.txt --without-hashes -o setup/requirements.txt
+      run-name: Installing poetry and poetry-plugin-export
+    - run: poetry export -f requirements.txt --without-hashes -o requirements.txt
+      run-name: Updating requirements.txt
