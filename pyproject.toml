@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vtk-web"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Andreu Cotanda Oliver <cotoli23@gmail.com>"]
 license = "MIT"
