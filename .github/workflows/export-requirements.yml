@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: divideprojects/poetry-export-requirements-action@v1
-      with:
-        without-hashes: true
-        outfile-name: setup/requirements.txt
+    - uses: actions/setup-python@v3
+    - run: python -m pip install poetry poetry-plugin-export
+    - run: poetry export -f requirements.txt --without-hashes -o setup/requirements.txt
