@@ -14,9 +14,6 @@ trame-vtk = "^2.5.8"
 trame-vuetify = "^2.3.1"
 
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.3.3"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
