@@ -1,0 +1,18 @@
+name: poetry export requirements.txt
+run-name: Updating packages in requirements.txt
+on:
+  pull_request:
+  push:
+    paths: 
+      - '**.toml'
+      - '**.lock'
+
+jobs:
+  export-requirements-txt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: divideprojects/poetry-export-requirements-action@v1
+      with:
+        without-hashes: true
+        outfile-name: ./setup/requirements.txt
