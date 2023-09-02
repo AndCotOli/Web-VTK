@@ -1,7 +1,7 @@
 """Main file."""
 from trame.app import get_server
-from ui.main import initialize as initialize_ui
-from state.main import initialize as initialize_state
+from vtk_web.ui import initialize as initialize_ui
+from vtk_web.state import initialize as initialize_state
 
 
 def main(server=None):

@@ -3,8 +3,8 @@ from tempfile import NamedTemporaryFile
 
 import numpy as np
 import pyvista as pv
-from plotter import plotter
-from scripts.vtk2www_inlet_outlets import default_inlet_outlets
+from vtk_web.plotter import plotter
+from vtk_web.scripts.vtk2www_inlet_outlets import default_inlet_outlets
 from trame.app.file_upload import ClientFile
 
 

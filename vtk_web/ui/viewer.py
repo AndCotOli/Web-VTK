@@ -3,7 +3,7 @@ from pyvista.trame.ui import get_or_create_viewer
 from trame.widgets import vuetify
 
 
-from plotter import plotter
+from vtk_web.plotter import plotter
 
 
 def initialize(layout, server):

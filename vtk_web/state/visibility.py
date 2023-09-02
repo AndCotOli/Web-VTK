@@ -1,5 +1,5 @@
 """Visibility state changes."""
-from plotter import plotter
+from vtk_web.plotter import plotter
 
 
 def initialize(server):
