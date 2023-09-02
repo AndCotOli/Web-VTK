@@ -15,4 +15,4 @@ jobs:
     - uses: divideprojects/poetry-export-requirements-action@v1
       with:
         without-hashes: true
-        outfile-name: ./setup/requirements.txt
+        outfile-name: setup/requirements.txt
