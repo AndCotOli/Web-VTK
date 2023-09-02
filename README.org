@@ -2,22 +2,6 @@
 #+author: Andreu Cotanda Oliver
 
 * Installation and usage
-** With =poetry=
-To read more about poetry and learn how to install it read [[https://python-poetry.org/][the official page]].
-
-
-- Create the virtual environment locally:
-#+begin_src sh
-export POETRY_VIRTUALENVS_IN_PROJECT=true
-#+end_src
-- Install the required dependencies:
-#+begin_src sh
-poetry install
-#+end_src
-- Run the app:
-#+begin_src sh
-poetry run python vtk_web/main.py # use --server and/or --hot_reload
-#+end_src
 **  With python =venv=
 
 - Create and activate a virtual environment:
