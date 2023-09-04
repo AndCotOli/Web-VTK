@@ -15,7 +15,6 @@ def initialize(server):
     state.trame__title = "Commlab VTK"
     state.trame__favicon = get_favicon()
 
-    ctrl.on_data_change.add(ctrl.view_update)
 
     set_up_layout(server)
 
