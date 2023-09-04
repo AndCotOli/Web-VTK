@@ -10,11 +10,10 @@ from .viewer import initialize as initialize_viewer
 
 def initialize(server):
     """Initialize ui."""
-    state, ctrl = server.state, server.controller
+    state = server.state
 
     state.trame__title = "Commlab VTK"
-    state.trame__favicon = get_favicon()
-
+    # state.trame__favicon = get_favicon()
 
     set_up_layout(server)
 
