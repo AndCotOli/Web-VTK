@@ -2,7 +2,6 @@
 #+author: Andreu Cotanda Oliver
 
 * Installation and usage
-**  With python =venv=
 
 - Create and activate a virtual environment:
 #+begin_src sh
@@ -16,3 +15,24 @@ pip install -e .
 #+begin_src sh
 vtk-web # user --server or --hot_reload
 #+end_src
+
+* Deployment
+
+We use =docker= to build and deploy the app.
+*Note*: the commands may need to be prefixed with ~sudo~ if the docker daemon is running as root.
+
+** Building the container
+
+To build the container, run the following command:
+#+begin_src sh
+docker build <path-to-project-root-folder> --tag vtk-web
+#+end_src
+
+** Running the container
+
+To run the container, run the following command:
+#+begin_src sh
+docker run -D --rm -p <PORT>:80 vtk-web
+#+end_src
+
+More documentation on deployment can be found [[file:deploy/README.org][here]].

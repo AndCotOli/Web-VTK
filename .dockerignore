@@ -1,6 +1,6 @@
-deploy/scripts/*
-build/*
-.venv/*
-.git/*
-*.egg-info/*
+build
+.venv
+.git
+*.egg-info
 *.org
+*/*.org

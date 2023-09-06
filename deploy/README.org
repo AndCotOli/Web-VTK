@@ -1,0 +1,40 @@
+#+title: Deployment
+#+author: Andreu Cotanda Oliver
+
+* Building the container
+
+To build the container, run the following command:
+#+begin_src sh
+docker build <path-to-project-root-folder> --tag vtk-web
+#+end_src
+
+* Running the container
+
+To run the container, run the following command:
+#+begin_src sh
+docker run -D --rm -p <PORT>:80 vtk-web
+#+end_src
+
+** Useful flags
+
+- ~-D~ runs ths container in dettached mode, i.e, in the background.
+- ~-it~ runs the container in interative mode, i.e, lets you see the console output.
+- ~--rm~ removes the container when exiting.
+- ~--name~ gives the container a running name to access it better.
+
+** Accessing the logs
+
+First, enter the container command line by running:
+#+begin_src sh
+docker exec -it <CONTAINER-NAME> bash
+#+end_src
+
+*Note*: if no name was specified during the =docker run= command, the name of the container can be obtained by running
+#+begin_src sh
+docker ps -a
+#+end_src
+
+The logs are located in ~~/deploy/server/logs~. This folders has two subfolders:
+- ~apache/~ contains the logs of the internal apache server.
+- ~launcher/~ contains the logs of the application execution.
+  - One file with an UUID prefix is created each time a new session is created.
