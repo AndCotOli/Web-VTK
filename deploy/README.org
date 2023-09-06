@@ -34,7 +34,7 @@ docker exec -it <CONTAINER-NAME> bash
 docker ps -a
 #+end_src
 
-The logs are located in ~~/deploy/server/logs~. This folders has two subfolders:
+The logs are located in =~/deploy/server/logs=. This folders has two subfolders:
 - ~apache/~ contains the logs of the internal apache server.
 - ~launcher/~ contains the logs of the application execution.
   - One file with an UUID prefix is created each time a new session is created.
