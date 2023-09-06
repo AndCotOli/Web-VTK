@@ -1,5 +1,6 @@
 #+title: Deployment
 #+author: Andreu Cotanda Oliver
+#+options: toc:2
 
 * Building the container
 
@@ -38,3 +39,12 @@ The logs are located in =~/deploy/server/logs=. This folders has two subfolders:
 - ~apache/~ contains the logs of the internal apache server.
 - ~launcher/~ contains the logs of the application execution.
   - One file with an UUID prefix is created each time a new session is created.
+
+* How does the container work?
+
+** Using the correct =vtk= version
+Since docker does not have a graphical X interface, we need a vtk build that targets headless systems.
+Vtk can built with =EGL= (targetting NVIDIA GPUs) or with =osmesa= (targetting only CPUs), however, Kitware only publishes the osmesa variant under ~vtk~ osmesa.
+
+To force the program to run with this build of vtk, we first need to install it normally with the unwanted version of vtk to then remove it and install the correct one.
+All of this is done in the [[file:setup/initialize.sh][initialization script]].

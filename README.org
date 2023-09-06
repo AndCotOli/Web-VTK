@@ -1,7 +1,8 @@
 #+title: VTK-Web
 #+author: Andreu Cotanda Oliver
+#+options: toc:2
 
-* Installation and usage
+* Local installation
 
 - Create and activate a virtual environment:
 #+begin_src sh
@@ -19,6 +20,7 @@ vtk-web # user --server or --hot_reload
 * Deployment
 
 We use =docker= to build and deploy the app.
+
 *Note*: the commands may need to be prefixed with ~sudo~ if the docker daemon is running as root.
 
 ** Building the container
